@@ -6,8 +6,9 @@ const key = process.env.GEMINI_API_KEY!;
 const ai = new GoogleGenAI({ apiKey: key });
 
 async function getSongs(temp: number, isDay: number, rain: number) {
-    
-    let prompt = `It's ${isDay ? "day" : "night"} here right now. 
+    let dt = new Date(Date.now());
+    let time = dt.toTimeString().split(' ')[0];
+    let prompt = `The time here is ${time} right now. 
     The temperature here is ${temp} degrees celsius, with ${rain}mm rainfall. 
     List 5 English songs to listen to in this weather.`
     const response = await ai.models.generateContent({

@@ -26,8 +26,10 @@ function PlayList({songlist} : {songlist: SongType[]}) {
     if (!songlist) return <div>Fetching the best fit songs....</div>
     const songdivs = songlist.map(
         song => {
+            // Obligatory unique key
+            let k = Math.round(song.title.length * Math.random());
             return (
-                <li className="nice">
+                <li className="nice" key={k}>
                 <SongTile title={song.title} artist={song.artist} />
                 </li>
             )

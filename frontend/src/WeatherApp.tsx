@@ -10,9 +10,9 @@ import PlayList from "./PlayList";
 
 
 function WeatherApp() {
-    let [temp, setTemp] = useState(69);
-    let [isDay, setDay] = useState(69);
-    let [rainfall, setRain] = useState(69);
+    let [temp, setTemp] = useState(-1);
+    let [isDay, setDay] = useState(-1);
+    let [rainfall, setRain] = useState(-1);
     let [playList, setPlayList] = useState<SongType[]>([])
     useEffect(() => {
         async function getDeets() {
@@ -38,6 +38,7 @@ function WeatherApp() {
     return (
         <>
             <Weather temp={temp} isDay={isDay} rain={rainfall} />
+            <div> Here are top 5 songs you can vibe to right now:</div>
             <PlayList songlist={playList} />
         </>
     )
