@@ -5,11 +5,32 @@
 
 import './SongTile.css'
 
-export type SongType = {title: string, artist: string}
+export type SongType = {title: string, artist: string};
 
-function SongTile(songprops: SongType) {
+type TileType = SongType & { isDay: number };
+
+const tileConfig = {
+    padding: '20px',
+    width: '600px',
+    'border-color': 'blueviolet',
+    margin: '20px',
+    color: 'black',
+}
+const dayConfig = {
+    ...tileConfig,
+    'background-color': 'antiquewhite',
+    'box-shadow': '-10px 10px black',
+}
+const nightConfig = {
+    ...tileConfig,
+    'background-color': '#7FBBC1',
+    'box-shadow': '-10px 10px gainsboro'
+}
+
+function SongTile(songprops: TileType) {
+    let conf = songprops.isDay ? dayConfig : nightConfig;
     return (
-        <div className="song">
+        <div style={conf}>
             <span>
                 <div className='songTitle'>
                     <b>{songprops.title}</b>
@@ -22,7 +43,7 @@ function SongTile(songprops: SongType) {
     )
 }
 
-function PlayList({songlist} : {songlist: SongType[]}) {
+function PlayList({songlist, isDay} : {songlist: SongType[], isDay: number}) {
     if (!songlist) return <div>Fetching the best fit songs....</div>
     const songdivs = songlist.map(
         song => {
@@ -30,7 +51,7 @@ function PlayList({songlist} : {songlist: SongType[]}) {
             let k = Math.round(song.title.length * Math.random());
             return (
                 <li className="nice" key={k}>
-                <SongTile title={song.title} artist={song.artist} />
+                <SongTile title={song.title} artist={song.artist} isDay={isDay} />
                 </li>
             )
         }

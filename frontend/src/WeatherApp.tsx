@@ -8,6 +8,22 @@ import Weather from "./Weather";
 import type { SongType } from "./PlayList";
 import PlayList from "./PlayList";
 
+const appConfig = {
+    padding: '70px',
+    minHeight: '85.7vh',
+    width: '93vw',
+}
+
+const dayConfig = {
+    ...appConfig,
+    background: 'linear-gradient(180deg,rgba(137, 247, 254, 1) 0%, rgba(102, 166, 255, 1) 100%)',
+}
+
+const nightConfig = {
+    ...appConfig,
+    background: 'linear-gradient(0deg,rgba(15, 32, 39, 1) 0%, rgba(44, 83, 100, 1) 100%)',
+    color: 'azure'
+}
 
 function WeatherApp() {
     let [temp, setTemp] = useState(-1);
@@ -34,13 +50,14 @@ function WeatherApp() {
             }
         }
         getDeets();
-    }, [])
+    }, []);
+
     return (
-        <>
+        <div style={isDay ? dayConfig : nightConfig}>
             <Weather temp={temp} isDay={isDay} rain={rainfall} />
             <div> Here are top 5 songs you can vibe to right now:</div>
-            <PlayList songlist={playList} />
-        </>
+            <PlayList songlist={playList} isDay={isDay} />
+        </div>
     )
 }
 
