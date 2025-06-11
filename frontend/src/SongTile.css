@@ -1,0 +1,12 @@
+.song {
+    background-color: antiquewhite;
+    padding: 20px;
+    width: 600px;
+    border-color:blueviolet;
+    box-shadow: -10px 10px black;
+    margin: 20px;
+}
+
+.songTitle {
+    font-size: x-large;
+}
