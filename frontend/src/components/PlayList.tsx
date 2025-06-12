@@ -12,18 +12,18 @@ type TileType = SongType & { isDay: number };
 const tileConfig = {
     padding: '20px',
     width: '600px',
-    'border-color': 'blueviolet',
+    borderColor: 'blueviolet',
     margin: '20px',
     color: 'black',
 }
 const dayConfig = {
     ...tileConfig,
-    'background-color': 'antiquewhite',
+    backgroundColor: 'antiquewhite',
     'box-shadow': '-10px 10px black',
 }
 const nightConfig = {
     ...tileConfig,
-    'background-color': '#7FBBC1',
+    backgroundColor: '#7FBBC1',
     'box-shadow': '-10px 10px gainsboro'
 }
 

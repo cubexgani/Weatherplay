@@ -3,10 +3,10 @@ Assemble weather and playlist components here
 */
 
 import { useEffect, useState } from "react";
-import getWeatherParams from "./get-weather";
-import Weather from "./Weather";
-import type { SongType } from "./PlayList";
-import PlayList from "./PlayList";
+import getWeatherParams from "./components/get-weather";
+import Weather from "./components/Weather";
+import type { SongType } from "./components/PlayList";
+import PlayList from "./components/PlayList";
 
 const appConfig = {
     padding: '70px',
@@ -25,18 +25,25 @@ const nightConfig = {
     color: 'azure'
 }
 
+
+
 function WeatherApp() {
+    let [isHidden, setHidden] = useState(true)
     let [temp, setTemp] = useState(-1);
     let [isDay, setDay] = useState(-1);
     let [rainfall, setRain] = useState(-1);
+    let [prec, setPrec] = useState(-1);
+    let [show, setShow] = useState(-1);
     let [playList, setPlayList] = useState<SongType[]>([])
     useEffect(() => {
         async function getDeets() {
             let deets = await getWeatherParams();
-            let [d, t, r] = [deets.current.isDay, Math.round(deets.current.temperature2m), deets.current.rain];
+            let [d, t, r, p, s] = [deets.current.isDay, Math.round(deets.current.temperature2m), deets.current.rain, deets.current.precipitation, deets.current.showers];
             setDay(d);
             setTemp(t);
             setRain(r);
+            setPrec(p);
+            setShow(s);
             let response = await fetch(`http://localhost:8000/songs/${d}/${t}/${r}`);
             console.log(response)
             if (response.status == 200) {
@@ -54,7 +61,8 @@ function WeatherApp() {
 
     return (
         <div style={isDay ? dayConfig : nightConfig}>
-            <Weather temp={temp} isDay={isDay} rain={rainfall} />
+            <Weather temp={temp} isDay={isDay} rain={rainfall} prec={prec} show={show} />
+            <button onClick={() => {setHidden(!isHidden)}}>Click me for hot singles</button>
             <div> Here are top 5 songs you can vibe to right now:</div>
             <PlayList songlist={playList} isDay={isDay} />
         </div>
