@@ -10,7 +10,8 @@ async function getSongs(temp: number, isDay: number, rain: number) {
     let time = dt.toTimeString().split(' ')[0];
     let prompt = `The time here is ${time} right now. 
     The temperature here is ${temp} degrees celsius, with ${rain}mm rainfall. 
-    List 5 English songs to listen to in this weather.`
+    List 5 English songs to listen to in this weather. The mood of the songs should align closely with
+    the specified weather conditions.`
     const response = await ai.models.generateContent({
         model: "gemini-2.0-flash",
         contents: prompt,
