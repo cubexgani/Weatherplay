@@ -8,7 +8,7 @@ function Clock() {
         () => {
             
             const t = setInterval(() => {
-                let dt = new Date(Date.now());
+                let dt = new Date();
                 let str = dt.toTimeString().split(' ');
                 setTime(str[0]);
 
@@ -30,7 +30,7 @@ function Weather({temp, isDay, rain, prec, show}: WeatherProps) {
     "The sun is shining, the birds are chirping, and you, my friend, are unemployed!" : 
     "The night sky outside looks beautiful! But not from your mother's basement!";
     return (
-        <div className="weather clock">
+        <div className="weather">
             <Clock />
             <h1>It's a whopping {weather}°C today</h1>
             <h2>{roast}</h2>

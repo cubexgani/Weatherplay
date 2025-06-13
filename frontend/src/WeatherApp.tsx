@@ -7,7 +7,8 @@ import getWeatherParams from "./components/get-weather";
 import Weather from "./components/Weather";
 import type { SongType } from "./components/PlayList";
 import PlayList from "./components/PlayList";
-import Background from './assets/darkbg.jpg'
+import NightBg from './assets/darkbg.jpg'
+import DayBg from './assets/daysky.jpg'
 
 const appConfig = {
     padding: '70px',
@@ -17,13 +18,14 @@ const appConfig = {
 
 const dayConfig = {
     ...appConfig,
-    background: 'linear-gradient(180deg,rgba(137, 247, 254, 1) 0%, rgba(102, 166, 255, 1) 100%)',
+    // background: 'linear-gradient(180deg,rgba(137, 247, 254, 1) 0%, rgba(102, 166, 255, 1) 100%)',
+    backgroundImage: `url(${DayBg})`
 }
 
 const nightConfig = {
     ...appConfig,
     // background: 'linear-gradient(0deg,rgba(15, 32, 39, 1) 0%, rgba(44, 83, 100, 1) 100%)',
-    backgroundImage: `url(${Background})`,
+    backgroundImage: `url(${NightBg})`,
     color: 'azure'
 }
 

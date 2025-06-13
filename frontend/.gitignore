@@ -25,8 +25,6 @@ dist-ssr
 
 # Template stuff
 src/App.*
-public/
-src/assets/
 
 # Environment variables
 .env

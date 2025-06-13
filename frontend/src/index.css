@@ -68,7 +68,7 @@ button:focus-visible {
     }
 }
 
-.clock {
+.weather {
     margin-bottom: 30px;
     background-color: rgba(161, 224, 255, 0.33);
     backdrop-filter: blur(3px);

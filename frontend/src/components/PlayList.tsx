@@ -3,11 +3,11 @@
 
 // let playlist = await fetch(BASE_URL + '/' + PORT)
 
-import './SongTile.css'
+import './PlayList.css'
 
 export type SongType = {title: string, artist: string};
 
-type TileType = SongType & { isDay: number };
+type TileType = SongType & { isDay: number, bgidx: number };
 
 const tileConfig = {
     padding: '20px',
@@ -18,8 +18,9 @@ const tileConfig = {
 }
 const dayConfig = {
     ...tileConfig,
-    backgroundColor: 'antiquewhite',
-    'box-shadow': '-10px 10px black',
+    backgroundColor: 'rgba(118, 64, 255, 0.3)',
+    backdropFilter: `blur(3px)`,
+    'box-shadow': '-10px 10px 5px black',
 }
 const nightConfig = {
     ...tileConfig,
@@ -27,10 +28,22 @@ const nightConfig = {
     'box-shadow': '-10px 10px gainsboro'
 }
 
+const colours = [
+    'rgba(118, 64, 255, 0.3)',
+    'rgba(64, 255, 190, 0.3)',
+    'rgba(255, 64, 64, 0.3)',
+    'rgba(255, 210, 64, 0.3)',
+    'rgba(64, 213, 255, 0.3)'
+]
+
 function SongTile(songprops: TileType) {
-    let conf = songprops.isDay ? dayConfig : nightConfig;
+    let defconf = songprops.isDay ? dayConfig : nightConfig;
+    let tileconf = {
+        ...defconf,
+        backgroundColor: colours[songprops.bgidx]
+    }
     return (
-        <div style={conf}>
+        <div style={tileconf}>
             <span>
                 <div className='songTitle'>
                     <b>{songprops.title}</b>
@@ -46,12 +59,11 @@ function SongTile(songprops: TileType) {
 function PlayList({songlist, isDay} : {songlist: SongType[], isDay: number}) {
     if (!songlist) return <div>Fetching the best fit songs....</div>
     const songdivs = songlist.map(
-        song => {
+        (song, idx) => {
             // Obligatory unique key
-            let k = Math.round(song.title.length * Math.random());
             return (
-                <li className="nice" key={k}>
-                <SongTile title={song.title} artist={song.artist} isDay={isDay} />
+                <li className="nice" key={idx}>
+                <SongTile title={song.title} artist={song.artist} isDay={isDay} bgidx={idx} />
                 </li>
             )
         }
