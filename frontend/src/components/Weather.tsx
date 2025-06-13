@@ -18,7 +18,7 @@ function Clock() {
         }, []);
     
     return (
-            <div className="clock">
+            <div >
                 <h3>Hello chat it's {time} right now</h3>
             </div>
     )
@@ -30,11 +30,11 @@ function Weather({temp, isDay, rain, prec, show}: WeatherProps) {
     "The sun is shining, the birds are chirping, and you, my friend, are unemployed!" : 
     "The night sky outside looks beautiful! But not from your mother's basement!";
     return (
-        <div className="weather">
+        <div className="weather clock">
             <Clock />
-            <h1>It's a whopping {weather} degrees celsius today</h1>
+            <h1>It's a whopping {weather}°C today</h1>
             <h2>{roast}</h2>
-            <h3>What about rain? {rain} {prec} {show}</h3>
+            <h3>Rain: {rain}mm, Precipitation: {prec}mm, Showers: {show}mm</h3>
         </div>
     )
 }

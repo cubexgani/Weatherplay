@@ -69,10 +69,11 @@ button:focus-visible {
 }
 
 .clock {
-    background-color: rgba(161, 224, 255, 0.38);
-    width: 30vw;
+    margin-bottom: 30px;
+    background-color: rgba(161, 224, 255, 0.33);
+    backdrop-filter: blur(3px);
+    width: 60vw;
     border-radius: 10px;
-    box-shadow: -10px 10px 5px #003153;
-    backdrop-filter: blur(10px);
+    box-shadow: -10px 10px 7px #003153;
     padding: 2px 0px 2px 30px;
 }
