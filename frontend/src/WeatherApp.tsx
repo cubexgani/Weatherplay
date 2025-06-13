@@ -19,7 +19,8 @@ const appConfig = {
 const dayConfig = {
     ...appConfig,
     // background: 'linear-gradient(180deg,rgba(137, 247, 254, 1) 0%, rgba(102, 166, 255, 1) 100%)',
-    backgroundImage: `url(${DayBg})`
+    backgroundImage: `url(${DayBg})`,
+    color: '#003153',
 }
 
 const nightConfig = {
@@ -39,10 +40,14 @@ function WeatherApp() {
     let [prec, setPrec] = useState(-1);
     let [show, setShow] = useState(-1);
     let [playList, setPlayList] = useState<SongType[]>([])
+
     useEffect(() => {
         async function getDeets() {
             let deets = await getWeatherParams();
-            let [d, t, r, p, s] = [deets.current.isDay, Math.round(deets.current.temperature2m), deets.current.rain, deets.current.precipitation, deets.current.showers];
+            let [d, t, r, p, s] = [deets.current.isDay, Math.round(deets.current.temperature2m), 
+                Number(deets.current.rain.toFixed(2)), 
+                Number(deets.current.precipitation.toFixed(2)), 
+                Number(deets.current.showers.toFixed(2))];
             setDay(d);
             setTemp(t);
             setRain(r);

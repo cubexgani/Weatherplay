@@ -20,7 +20,7 @@ const dayConfig = {
     ...tileConfig,
     backgroundColor: 'rgba(118, 64, 255, 0.3)',
     backdropFilter: `blur(3px)`,
-    'box-shadow': '-10px 10px 5px black',
+    'box-shadow': '-10px 10px 5px #213547',
 }
 const nightConfig = {
     ...tileConfig,
