@@ -10,6 +10,8 @@ import PlayList from "./components/PlayList";
 import NightBg from './assets/darkbg.jpg'
 import DayBg from './assets/daysky.jpg'
 
+type ResponseType = {songdeets: SongType[], roast: string}
+
 const appConfig = {
     padding: '70px',
     minHeight: '84vh',
@@ -40,7 +42,7 @@ function WeatherApp() {
     let [prec, setPrec] = useState(-1);
     let [show, setShow] = useState(-1);
     let [playList, setPlayList] = useState<SongType[]>([])
-
+    let [roast, setRoast] = useState("");
     useEffect(() => {
         async function getDeets() {
             let deets = await getWeatherParams();
@@ -56,9 +58,12 @@ function WeatherApp() {
             let response = await fetch(`http://localhost:8000/songs/${d}/${t}/${p}`);
             console.log(response)
             if (response.status == 200) {
-                let songs : SongType[] = await response.json();
+                let res : ResponseType = await response.json();
+                let songs : SongType[] = res.songdeets;
+                let aiRoast : string = res.roast;
                 console.log("songs\n", songs);
                 if (songs) setPlayList(songs);
+                if (aiRoast) setRoast(aiRoast);
             }
             else {
                 console.log('Maybe your server isnt turned on??')
@@ -69,7 +74,7 @@ function WeatherApp() {
 
     return (
         <div style={isDay ? dayConfig : nightConfig}>
-            <Weather temp={temp} isDay={isDay} rain={rainfall} prec={prec} show={show} />
+            <Weather temp={temp} isDay={isDay} rain={rainfall} prec={prec} show={show} roast={roast} />
             <button onClick={() => {setHidden(!isHidden)}}>Click me for fun I guess</button>
             <div> Here are top 5 songs you can vibe to right now:</div>
             <PlayList songlist={playList} isDay={isDay} />
