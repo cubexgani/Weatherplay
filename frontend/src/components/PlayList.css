@@ -6,3 +6,8 @@
 .songArtist {
     text-align: center;
 }
+
+.navButton {
+    background-color: rgb(66, 205, 255, 0.38);
+    backdrop-filter: blur(5px);
+}

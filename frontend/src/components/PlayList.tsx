@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import './PlayList.css'
+import './PlayList.css';
+import backArrow from '../assets/arrow_back.svg';
+import frontArrow from '../assets/arrow_forward.svg';
 
 export type SongType = {title: string, artist: string};
 
@@ -11,6 +13,7 @@ const tileConfig = {
     width: '600px',
     borderColor: 'blueviolet',
     margin: '20px',
+    borderRadius: '7px',
 }
 const dayConfig = {
     ...tileConfig,
@@ -80,9 +83,13 @@ function PlayList({songlist, isDay} : {songlist: SongType[], isDay: number}) {
     return (
         <div>
             <div style={playconf}>
-                <button disabled={songind == 0} onClick={handlePrevClick}>Previous</button>
+                <button className='navButton' disabled={songind == 0} onClick={handlePrevClick}>
+                    <img src={backArrow} />
+                </button>
                     {songdivs[songind]}
-                <button disabled={songind == songlist.length - 1} onClick={handleNextClick}>Next</button>
+                <button className='navButton' disabled={songind == songlist.length - 1} onClick={handleNextClick}>
+                    <img src={frontArrow} />
+                </button>
             </div>
         </div>
     )
