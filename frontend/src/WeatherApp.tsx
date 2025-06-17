@@ -53,12 +53,11 @@ function WeatherApp() {
             setRain(r);
             setPrec(p);
             setShow(s);
-            let response = await fetch(`http://localhost:8000/songs/${d}/${t}/${r}`);
+            let response = await fetch(`http://localhost:8000/songs/${d}/${t}/${p}`);
             console.log(response)
             if (response.status == 200) {
-                let nice = await response.text();
-                let songs : SongType[] = JSON.parse(nice);
-                console.log(songs);
+                let songs : SongType[] = await response.json();
+                console.log("songs\n", songs);
                 if (songs) setPlayList(songs);
             }
             else {
