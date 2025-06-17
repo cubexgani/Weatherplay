@@ -1,8 +1,3 @@
-// const BASE_URL = '127.0.0.1';
-// const PORT = 8000;
-
-// let playlist = await fetch(BASE_URL + '/' + PORT)
-
 import { useState } from 'react';
 import './PlayList.css'
 
@@ -11,8 +6,9 @@ export type SongType = {title: string, artist: string};
 type TileType = SongType & { isDay: number, bgidx: number };
 
 const tileConfig = {
+    alignItems: 'center',
     padding: '20px',
-    width: '300px',
+    width: '600px',
     borderColor: 'blueviolet',
     margin: '20px',
 }
@@ -57,17 +53,8 @@ function SongTile(songprops: TileType) {
 
 const playconf = {
     margin: '60px 0px 60px 0px',
-    display: 'inline flex',
-    alignItems: 'center'
-};
-const nextconf = {
-    position: 'absolute',
-    right: '2vw',
-};
-
-const songconf = {
-    position: 'absolute',
-    right: '35vw'
+    display: 'flex',
+    justifyContent: 'space-between'
 };
 
 
@@ -85,9 +72,8 @@ function PlayList({songlist, isDay} : {songlist: SongType[], isDay: number}) {
     const songdivs = songlist.map(
         (song, idx) => {
             return (
-                    <div className='songconf'>
-                        <SongTile title={song.title} artist={song.artist} isDay={isDay} bgidx={idx} />
-                    </div>
+                    
+                    <SongTile title={song.title} artist={song.artist} isDay={isDay} bgidx={idx} />
             )
         }
     )
@@ -96,7 +82,7 @@ function PlayList({songlist, isDay} : {songlist: SongType[], isDay: number}) {
             <div style={playconf}>
                 <button disabled={songind == 0} onClick={handlePrevClick}>Previous</button>
                     {songdivs[songind]}
-                <button className='next' disabled={songind == songlist.length - 1} onClick={handleNextClick}>Next</button>
+                <button disabled={songind == songlist.length - 1} onClick={handleNextClick}>Next</button>
             </div>
         </div>
     )

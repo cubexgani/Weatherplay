@@ -1,17 +1,8 @@
 .songTitle {
     font-size: x-large;
+    text-align: center;
 }
 
-.next {
-    position: absolute;
-    right: 2vw;
-}
-
-.song {
-    position: absolute;
-    right: 35vw;
-}
-
-ul {
-    list-style-type: none;
+.songArtist {
+    text-align: center;
 }
