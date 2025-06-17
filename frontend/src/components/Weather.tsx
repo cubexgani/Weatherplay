@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-type WeatherProps = {temp: number, isDay: number, rain: number, prec: number, show: number, roast: string}
+type WeatherProps = {temp: number, rain: number, prec: number, show: number, roast: string}
 
 function Clock() {
     let [time, setTime] = useState('00:00:00');
@@ -24,7 +24,7 @@ function Clock() {
     )
 }
 
-function Weather({temp, isDay, rain, prec, show, roast}: WeatherProps) {
+function Weather({temp, rain, prec, show, roast}: WeatherProps) {
     let weather = Math.round(temp);
     return (
         <div className="weather">

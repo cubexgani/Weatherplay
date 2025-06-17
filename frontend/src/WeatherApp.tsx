@@ -7,7 +7,7 @@ import getWeatherParams from "./components/get-weather";
 import Weather from "./components/Weather";
 import type { SongType } from "./components/PlayList";
 import PlayList from "./components/PlayList";
-import NightBg from './assets/darkbg.jpg'
+import NightBg from './assets/nightsky.jpg'
 import DayBg from './assets/daysky.jpg'
 
 type ResponseType = {songdeets: SongType[], roast: string}
@@ -20,14 +20,12 @@ const appConfig = {
 
 const dayConfig = {
     ...appConfig,
-    // background: 'linear-gradient(180deg,rgba(137, 247, 254, 1) 0%, rgba(102, 166, 255, 1) 100%)',
     backgroundImage: `url(${DayBg})`,
     color: '#003153',
 }
 
 const nightConfig = {
     ...appConfig,
-    // background: 'linear-gradient(0deg,rgba(15, 32, 39, 1) 0%, rgba(44, 83, 100, 1) 100%)',
     backgroundImage: `url(${NightBg})`,
     color: 'azure'
 }
@@ -55,7 +53,7 @@ function WeatherApp() {
             setRain(r);
             setPrec(p);
             setShow(s);
-            let response = await fetch(`http://localhost:8000/songs/${d}/${t}/${p}`);
+            let response = await fetch(`http://localhost:8000/songs/${t}/${p}`);
             console.log(response)
             if (response.status == 200) {
                 let res : ResponseType = await response.json();
@@ -74,7 +72,7 @@ function WeatherApp() {
 
     return (
         <div style={isDay ? dayConfig : nightConfig}>
-            <Weather temp={temp} isDay={isDay} rain={rainfall} prec={prec} show={show} roast={roast} />
+            <Weather temp={temp} rain={rainfall} prec={prec} show={show} roast={roast} />
             <button onClick={() => {setHidden(!isHidden)}}>Click me for fun I guess</button>
             <div> Here are top 5 songs you can vibe to right now:</div>
             <PlayList songlist={playList} isDay={isDay} />
