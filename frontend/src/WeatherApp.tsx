@@ -30,8 +30,6 @@ const nightConfig = {
     color: 'azure'
 }
 
-
-
 function WeatherApp() {
     let [isHidden, setHidden] = useState(true)
     let [temp, setTemp] = useState(-1);
@@ -53,7 +51,7 @@ function WeatherApp() {
             setRain(r);
             setPrec(p);
             setShow(s);
-            let response = await fetch(`http://localhost:8000/songs/${t}/${p}`);
+            let response = await fetch(`http://localhost:8000/songs?temp=${t}&rain=${p}`);
             console.log(response)
             if (response.status == 200) {
                 let res : ResponseType = await response.json();

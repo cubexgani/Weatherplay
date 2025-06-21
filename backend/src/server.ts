@@ -14,13 +14,13 @@ app.get('/', (req, res) => {
     res.send('Hello World!\n').status(200)
 })
 
-app.get('/songs/:temp/:rain', async (req, res) => {
-    let { temp, rain } = req.params;
+app.get('/songs', async (req, res) => {
+    let { temp, rain } = req.query;
     // parse
     const data = [temp, rain].map(Number) as [number, number];
     //if any of these is not a number
     if (data.some(isNaN))
-        return void res.status(404).send("get out\n");
+        return void res.status(404).send(temp + " " + rain);
     
     let resp = await getSongs(...data);
     res.send(resp).status(200);

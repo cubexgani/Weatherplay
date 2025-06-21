@@ -11,6 +11,7 @@ async function getSongs(temp: number, rain: number) {
     let prompt = `The time here is ${time} right now. 
     The temperature here is ${temp} degrees celsius, with ${rain}mm rainfall. 
     List 5 English songs to listen to in these weather conditions.
+    Pay close attention to the time while doing so.
     Also generate a roast based on the current weather conditions.`
     const response = await ai.models.generateContent({
         model: "gemini-2.0-flash",
