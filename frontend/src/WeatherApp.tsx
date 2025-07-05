@@ -5,12 +5,9 @@ Assemble weather and playlist components here
 import { useEffect, useState } from "react";
 import getWeatherParams from "./components/get-weather";
 import Weather from "./components/Weather";
-import type { SongType } from "./components/PlayList";
-import PlayList from "./components/PlayList";
 import NightBg from './assets/nightsky.jpg'
 import DayBg from './assets/daysky.jpg'
-
-type ResponseType = {songdeets: SongType[], roast: string}
+import PlayEffect from "./components/PlayList";
 
 const appConfig = {
     padding: '70px',
@@ -30,6 +27,8 @@ const nightConfig = {
     color: 'azure'
 }
 
+const Languages = ['English', 'Hindi', 'Bengali', 'Japanese', 'Spanish'];
+
 function WeatherApp() {
     let [isHidden, setHidden] = useState(true)
     let [temp, setTemp] = useState(-1);
@@ -37,8 +36,11 @@ function WeatherApp() {
     let [rainfall, setRain] = useState(-1);
     let [prec, setPrec] = useState(-1);
     let [show, setShow] = useState(-1);
-    let [playList, setPlayList] = useState<SongType[]>([])
     let [roast, setRoast] = useState("");
+
+    let [lang, setLang] = useState(Languages[0]);
+    let options = Languages.map(language => <option value={language}>{language}</option>)
+
     useEffect(() => {
         async function getDeets() {
             let deets = await getWeatherParams();
@@ -51,29 +53,29 @@ function WeatherApp() {
             setRain(r);
             setPrec(p);
             setShow(s);
-            let response = await fetch(`http://localhost:8000/songs?temp=${t}&rain=${p}`);
-            console.log(response)
-            if (response.status == 200) {
-                let res : ResponseType = await response.json();
-                let songs : SongType[] = res.songdeets;
-                let aiRoast : string = res.roast;
-                console.log("songs\n", songs);
-                if (songs) setPlayList(songs);
-                if (aiRoast) setRoast(aiRoast);
-            }
+            let res = await fetch(`http://localhost:8000/roast?temp=${temp}&rain=${prec}`);
+            if (res.status == 404) console.log("Some error happened. Did you provide accurate query params?");
+            else if (res.status == 500) console.log("Either the server is not turned on, or you cooked the Gemini API");
             else {
-                console.log('Maybe your server isnt turned on??')
+                let roastjson : {roast: string} = await res.json();
+                let aiRoast = roastjson.roast;
+                setRoast(aiRoast);
             }
         }
         getDeets();
     }, []);
+    // Fun fact: ESLint wants me to remove this dependency array, but the website breaks if I don't provide
+    // an empty dependency array.
 
     return (
         <div style={isDay ? dayConfig : nightConfig}>
             <Weather temp={temp} rain={rainfall} prec={prec} show={show} roast={roast} />
+            <select onChange={e => setLang(e.target.value)} >
+                {options}
+            </select>
             <button onClick={() => {setHidden(!isHidden)}}>Click me for fun I guess</button>
             <div> Here are top 5 songs you can vibe to right now:</div>
-            <PlayList songlist={playList} isDay={isDay} />
+            <PlayEffect temp={temp} rain={prec} isDay={isDay} lang={"Spanish"} />
         </div>
     )
 }

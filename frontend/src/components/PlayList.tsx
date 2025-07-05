@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './PlayList.css';
 import backArrow from '../assets/arrow_back.svg';
 import frontArrow from '../assets/arrow_forward.svg';
@@ -6,6 +6,8 @@ import frontArrow from '../assets/arrow_forward.svg';
 export type SongType = {title: string, artist: string};
 
 type TileType = SongType & { isDay: number, bgidx: number };
+
+type WeatherType = {temp: number, rain: number, isDay: number, lang: string}
 
 const tileConfig = {
     alignItems: 'center',
@@ -44,12 +46,12 @@ function SongTile(songprops: TileType) {
     }
     return (
         <div style={tileconf}>
-                <div className='songTitle'>
-                    <b>{songprops.title}</b>
-                </div>
-                <div className='songArtist'>
-                    {songprops.artist}
-                </div>
+        <div className='songTitle'>
+        <b>{songprops.title}</b>
+        </div>
+        <div className='songArtist'>
+        {songprops.artist}
+        </div>
         </div>
     )
 }
@@ -63,6 +65,7 @@ const playconf = {
 
 function PlayList({songlist, isDay} : {songlist: SongType[], isDay: number}) {
     const [songind, setSongInd] = useState(0);
+    
     if (!songlist) return <div>Fetching the best fit songs....</div>
     function handleNextClick() {
         if (songind == songlist.length - 1) return;
@@ -75,24 +78,48 @@ function PlayList({songlist, isDay} : {songlist: SongType[], isDay: number}) {
     const songdivs = songlist.map(
         (song, idx) => {
             return (
-                    
-                    <SongTile title={song.title} artist={song.artist} isDay={isDay} bgidx={idx} />
+                
+                <SongTile title={song.title} artist={song.artist} isDay={isDay} bgidx={idx} />
             )
         }
     )
     return (
         <div>
-            <div style={playconf}>
-                <button className='navButton' disabled={songind == 0} onClick={handlePrevClick}>
-                    <img src={backArrow} />
-                </button>
-                    {songdivs[songind]}
-                <button className='navButton' disabled={songind == songlist.length - 1} onClick={handleNextClick}>
-                    <img src={frontArrow} />
-                </button>
-            </div>
+        <div style={playconf}>
+        <button className='navButton' disabled={songind == 0} onClick={handlePrevClick}>
+        <img src={backArrow} />
+        </button>
+        {songdivs[songind]}
+        <button className='navButton' disabled={songind == songlist.length - 1} onClick={handleNextClick}>
+        <img src={frontArrow} />
+        </button>
+        </div>
         </div>
     )
 }
 
-export default PlayList;
+function PlayEffect({temp, rain, isDay, lang} : WeatherType) {
+    let [playList, setPlayList] = useState<SongType[]>([])
+    useEffect(
+        () => {
+            async function getPlaylist() {
+                let response = await fetch(`http://localhost:8000/songs?temp=${temp}&rain=${rain}&lang=${lang}`);
+                console.log(response)
+                if (response.status == 200) {
+                    let songs : SongType[] = await response.json();
+                    console.log("songs\n", songs);
+                    if (songs) setPlayList(songs);
+                }
+                else {
+                    console.log('Maybe your server isnt turned on??')
+                }
+            }
+            getPlaylist();
+        }, []
+    )
+    return (
+        <PlayList songlist={playList} isDay={isDay} />
+    )
+}
+
+export default PlayEffect;
