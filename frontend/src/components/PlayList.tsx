@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import './PlayList.css';
 import backArrow from '../assets/arrow_back.svg';
 import frontArrow from '../assets/arrow_forward.svg';
+import PORT from "../consts"
 
-export type SongType = {title: string, artist: string};
-
+type SongType = {title: string, artist: string};
 type TileType = SongType & { isDay: number, bgidx: number };
-
 type WeatherType = {temp: number, rain: number, isDay: number, lang: string}
 
 const tileConfig = {
@@ -106,7 +105,7 @@ function PlayEffect({temp, rain, isDay, lang} : WeatherType) {
                 // Ik this line won't run because this component will be rendered iff lang is not null,
                 // but still
                 if (!lang) return;
-                let response = await fetch(`http://localhost:8000/songs?temp=${temp}&rain=${rain}&lang=${lang}`);
+                let response = await fetch(`http://localhost:${PORT}/songs?temp=${temp}&rain=${rain}&lang=${lang}`);
                 console.log(response)
                 if (response.status == 200) {
                     let songs : SongType[] = await response.json();

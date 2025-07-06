@@ -8,6 +8,7 @@ import Weather from "./components/Weather";
 import NightBg from './assets/nightsky.jpg'
 import DayBg from './assets/daysky.jpg'
 import PlayEffect from "./components/PlayList";
+import PORT from "./consts"
 
 const appConfig = {
     padding: '70px',
@@ -53,7 +54,7 @@ function WeatherApp() {
             setRain(r);
             setPrec(p);
             setShow(s);
-            let res = await fetch(`http://localhost:8000/roast?temp=${t}&rain=${p}`);
+            let res = await fetch(`http://localhost:${PORT}/roast?temp=${t}&rain=${p}`);
             if (res.status == 404) console.log("Some error happened. Did you provide accurate query params?");
             else if (res.status == 500) console.log("Either the server is not turned on, or you cooked the Gemini API");
             else {
