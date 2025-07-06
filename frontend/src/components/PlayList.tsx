@@ -103,6 +103,9 @@ function PlayEffect({temp, rain, isDay, lang} : WeatherType) {
     useEffect(
         () => {
             async function getPlaylist() {
+                // Ik this line won't run because this component will be rendered iff lang is not null,
+                // but still
+                if (!lang) return;
                 let response = await fetch(`http://localhost:8000/songs?temp=${temp}&rain=${rain}&lang=${lang}`);
                 console.log(response)
                 if (response.status == 200) {
@@ -115,10 +118,15 @@ function PlayEffect({temp, rain, isDay, lang} : WeatherType) {
                 }
             }
             getPlaylist();
-        }, []
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [lang]
     )
+    if (!lang) return <div>Choose.</div>
     return (
+        <>
+        <div> Here are top 5 songs you can vibe to right now:</div>
         <PlayList songlist={playList} isDay={isDay} />
+        </>
     )
 }
 

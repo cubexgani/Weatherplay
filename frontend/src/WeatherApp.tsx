@@ -53,7 +53,7 @@ function WeatherApp() {
             setRain(r);
             setPrec(p);
             setShow(s);
-            let res = await fetch(`http://localhost:8000/roast?temp=${temp}&rain=${prec}`);
+            let res = await fetch(`http://localhost:8000/roast?temp=${t}&rain=${p}`);
             if (res.status == 404) console.log("Some error happened. Did you provide accurate query params?");
             else if (res.status == 500) console.log("Either the server is not turned on, or you cooked the Gemini API");
             else {
@@ -70,12 +70,12 @@ function WeatherApp() {
     return (
         <div style={isDay ? dayConfig : nightConfig}>
             <Weather temp={temp} rain={rainfall} prec={prec} show={show} roast={roast} />
+            <div>Language of your choice: </div>
             <select onChange={e => setLang(e.target.value)} >
                 {options}
             </select>
-            <button onClick={() => {setHidden(!isHidden)}}>Click me for fun I guess</button>
-            <div> Here are top 5 songs you can vibe to right now:</div>
-            <PlayEffect temp={temp} rain={prec} isDay={isDay} lang={"Spanish"} />
+            <button onClick={() => {setHidden(false)}}>Generate vibes</button>
+            {lang && !isHidden && <PlayEffect temp={temp} rain={prec} isDay={isDay} lang={lang} />}
         </div>
     )
 }
