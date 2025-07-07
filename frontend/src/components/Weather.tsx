@@ -25,6 +25,13 @@ function Clock() {
 }
 
 function Weather({temp, rain, prec, show, roast}: WeatherProps) {
+    if (temp == Number.MIN_SAFE_INTEGER) {
+        return (
+            <div className="weather">
+                <h1>Fetching some weather data...</h1>
+            </div>
+        )
+    }
     let weather = Math.round(temp);
     return (
         <div className="weather">

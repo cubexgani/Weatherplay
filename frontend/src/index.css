@@ -77,3 +77,16 @@ button:focus-visible {
     box-shadow: -10px 10px 7px #003153;
     padding: 2px 0px 2px 30px;
 }
+
+select {
+    padding: 7px;
+    margin: 10px 20px 10px 0px;
+    border-radius: 5px;
+    box-shadow: -5px 5px 7px #003153;
+}
+
+.genCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
